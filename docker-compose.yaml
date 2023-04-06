@@ -1,0 +1,26 @@
+version: '3'
+# Backend services
+services:
+  backend:
+    tty: true
+    image: amwau/backendfolder
+    ports:
+      - "5000:5000"
+    volumes:
+      - elevate:/data/db
+
+   
+  # Frontend services
+  client:
+    tty: true
+    image: amwau/clientfolder
+    ports:
+      - "3000:3000"    
+    depends_on:
+      - backend
+   
+    volumes:
+      - elevate:/data/db
+
+volumes:
+ elevate: {}
