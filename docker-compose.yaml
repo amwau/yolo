@@ -6,6 +6,9 @@ services:
     image: amwau/backendfolder:v2.0.2 
     ports:
       - "5000:5000"
+    environment:
+      PORT: 5000
+      MONGODB_URI: 'mongodb+srv://amwau:1234ann@cluster0.hng1sl8.mongodb.net/?retryWrites=true&w=majority'
     volumes:
       - elevate:/data/db
 
