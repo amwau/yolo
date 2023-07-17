@@ -2,20 +2,30 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: backend-deployment
-  labels:
-    app: backend
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: backend
+      app: backend-deployment
   template:
     metadata:
       labels:
-        app: backend
+        app: backend-deployment
     spec:
       containers:
-      - name: backend
-        image: amwau/backendfolder:v2.0.2
-        ports:
-        - containerPort: 5000
+        - name: backend-deployment
+          image: amwau/backendfolder:v2.0.2
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5000
+          env:
+          - name: PORT
+            valueFrom:
+              configMapKeyRef:
+                name: backend-deployment
+                key: PORT
+          - name: MONGODB_URI
+            valueFrom:
+              secretKeyRef:
+                name: backend-secret
+                key: MONGODB_URI
